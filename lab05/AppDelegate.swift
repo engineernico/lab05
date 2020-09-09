@@ -23,9 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
     ) -> Bool {
         
-        let location = LocationAnnotation(title: "Monash Uni - Caulfield",
-                                          subtitle: "The Caulfield Campus of the Uni",
-                                          lat: -37.877623, long: 145.045374)
+        let location = LocationAnnotation(title: "Monash Uni - Clayton",
+                                          subtitle: "The Clayton Campus of the Uni",
+                                          lat: -37.9105238, long: 145.1362182)
         
         geofence = CLCircularRegion(center: location.coordinate, radius: 500,
                                     identifier: "geofence")
@@ -39,22 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         return true
     }
     
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        application.applicationIconBadgeNumber = 0
-        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-    }
     
-    func showAlert(target: UIViewController, title: String, message: String? = nil, style: UIAlertController.Style = .alert, actionList:[UIAlertAction] = [UIAlertAction(title: "OK", style: .default, handler: nil)] ) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: style)
-        for action in actionList {
-            alert.addAction(action)
-        }
-        // Check to see if the target viewController current is currently presenting a ViewController
-        if target.presentedViewController == nil {
-            target.present(alert, animated: true, completion: nil)
-        }
-    }
     
     
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
@@ -75,22 +60,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 extension AppDelegate {
     
     func handle(message : String) {
+       
+        if let mapView = UIApplication.topViewController() as? MapViewController {
+            print("YAAHH")
+        } else {
+            if (UIApplication.topViewController() is MapViewController) {
+                print("maybe")
+            }
+        }
+        
+        print(type(of: UIApplication.topViewController()))
+        
         let alert = UIAlertController(title: "You're on the move!", message: message, preferredStyle: .alert)
         let cancelButton = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
         alert.addAction(cancelButton)
         UIApplication.topViewController()?.present(alert, animated: true, completion: nil)
+            
+        
     }
     
     
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         if region is CLCircularRegion {
-            handle(message: "Currently entering Monash Caulfield")
+            handle(message: "Currently entering Monash Clayton")
         }
         
     }
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
         if region is CLCircularRegion {
-            handle(message: "Currently leaving Monash Caulfield")
+            handle(message: "Currently leaving Monash Clayton")
         }
     }
 }
@@ -98,14 +96,14 @@ extension AppDelegate {
 
 extension UIApplication {
     class func topViewController(controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
-        if let navigationController = controller as? UINavigationController {
-            return topViewController(controller: navigationController.visibleViewController)
-        }
-        if let tabController = controller as? UITabBarController {
-            if let selected = tabController.selectedViewController {
-                return topViewController(controller: selected)
-            }
-        }
+//        if let navigationController = controller as? UINavigationController {
+//            return topViewController(controller: navigationController.visibleViewController)
+//        }
+//        if let tabController = controller as? UITabBarController {
+//            if let selected = tabController.selectedViewController {
+//                return topViewController(controller: selected)
+//            }
+//        }
         if let presented = controller?.presentedViewController {
             return topViewController(controller: presented)
         }

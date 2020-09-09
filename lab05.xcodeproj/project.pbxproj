@@ -17,7 +17,7 @@
 		2622B52B2508850E005DD0DF /* NewLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2622B52A2508850E005DD0DF /* NewLocationViewController.swift */; };
 		2622B52D25088529005DD0DF /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2622B52C25088529005DD0DF /* MapViewController.swift */; };
 		2622B52F25088567005DD0DF /* LocationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2622B52E25088567005DD0DF /* LocationAnnotation.swift */; };
-		F3A0C9172508D61200AD6D9D /* default.gpx in Resources */ = {isa = PBXBuildFile; fileRef = F3A0C9162508D61200AD6D9D /* default.gpx */; };
+		26CF712D2508E939002C6FD0 /* clayton.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 26CF712C2508E939002C6FD0 /* clayton.gpx */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,7 +33,7 @@
 		2622B52A2508850E005DD0DF /* NewLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLocationViewController.swift; sourceTree = "<group>"; };
 		2622B52C25088529005DD0DF /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		2622B52E25088567005DD0DF /* LocationAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAnnotation.swift; sourceTree = "<group>"; };
-		F3A0C9162508D61200AD6D9D /* default.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = default.gpx; sourceTree = "<group>"; };
+		26CF712C2508E939002C6FD0 /* clayton.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = clayton.gpx; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,7 +66,6 @@
 		2619EDBC250853760080F8BB /* lab05 */ = {
 			isa = PBXGroup;
 			children = (
-				F3A0C9162508D61200AD6D9D /* default.gpx */,
 				2619EDBD250853760080F8BB /* AppDelegate.swift */,
 				2619EDBF250853760080F8BB /* SceneDelegate.swift */,
 				2619EDC1250853760080F8BB /* ViewController.swift */,
@@ -77,6 +76,7 @@
 				2622B528250884E5005DD0DF /* LocationTableViewController.swift */,
 				2622B52A2508850E005DD0DF /* NewLocationViewController.swift */,
 				2622B52C25088529005DD0DF /* MapViewController.swift */,
+				26CF712C2508E939002C6FD0 /* clayton.gpx */,
 				2622B52E25088567005DD0DF /* LocationAnnotation.swift */,
 			);
 			path = lab05;
@@ -141,8 +141,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2619EDCA250853780080F8BB /* LaunchScreen.storyboard in Resources */,
-				F3A0C9172508D61200AD6D9D /* default.gpx in Resources */,
 				2619EDC7250853780080F8BB /* Assets.xcassets in Resources */,
+				26CF712D2508E939002C6FD0 /* clayton.gpx in Resources */,
 				2619EDC5250853760080F8BB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -11,9 +11,11 @@ import MapKit
 
 class MapViewController: UIViewController {
     
+    var isMap : Bool = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         // Do any additional setup after loading the view.
     }
     

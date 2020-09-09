@@ -7,10 +7,14 @@
 //
 
 import UIKit
+import MapKit
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelegate {
     
     var window: UIWindow?
+    var geofence: CLCircularRegion?
+    var mvc : MapViewController?
+    var locationManager: CLLocationManager = CLLocationManager()
     
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -26,6 +30,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let locationTableViewController = navigationController.viewControllers.first as!
         LocationTableViewController
         let mapViewController = splitViewController.viewControllers.last as! MapViewController
+        mvc = mapViewController
+        
+        let location = LocationAnnotation(title: "Monash Uni - Clayton",
+                                          subtitle: "The Clayton Campus of the Uni",
+                                          lat: -37.9105238, long: 145.1362182)
+        
+        geofence = CLCircularRegion(center: location.coordinate, radius: 500,
+                                    identifier: "geofence")
+        geofence?.notifyOnExit = true
+        geofence?.notifyOnEntry = true
+        
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startMonitoring(for: geofence!)
+        
         
         locationTableViewController.mapViewController = mapViewController
     }
@@ -61,3 +80,49 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
 }
 
+extension SceneDelegate {
+    
+    func handle(message : String) {
+        print(message)
+        if mvc?.viewIfLoaded?.window != nil {
+            let alert = UIAlertController(title: "You're on the move!", message: message, preferredStyle: .alert)
+            let cancelButton = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+            alert.addAction(cancelButton)
+            UIApplication.topViewController()?.present(alert, animated: true, completion: nil)
+            
+        }
+
+    }
+    
+    
+    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        if region is CLCircularRegion {
+            handle(message: "Currently entering Monash Clayton")
+        }
+        
+    }
+    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+        if region is CLCircularRegion {
+            handle(message: "Currently leaving Monash Clayton")
+        }
+    }
+}
+
+
+extension UIApplication {
+    class func topViewController(controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+        //        if let navigationController = controller as? UINavigationController {
+        //            return topViewController(controller: navigationController.visibleViewController)
+        //        }
+        //        if let tabController = controller as? UITabBarController {
+        //            if let selected = tabController.selectedViewController {
+        //                return topViewController(controller: selected)
+        //            }
+        //        }
+        if let presented = controller?.presentedViewController {
+            return topViewController(controller: presented)
+        }
+        return controller
+    }
+    
+}

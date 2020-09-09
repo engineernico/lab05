@@ -15,26 +15,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     
     
-    var geofence: CLCircularRegion?
-    var locationManager: CLLocationManager = CLLocationManager()
-    
+
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
     ) -> Bool {
         
-        let location = LocationAnnotation(title: "Monash Uni - Clayton",
-                                          subtitle: "The Clayton Campus of the Uni",
-                                          lat: -37.9105238, long: 145.1362182)
-        
-        geofence = CLCircularRegion(center: location.coordinate, radius: 500,
-                                    identifier: "geofence")
-        geofence?.notifyOnExit = true
-        geofence?.notifyOnEntry = true
-        
-        locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
-        locationManager.startMonitoring(for: geofence!)
         
         return true
     }
@@ -57,57 +43,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
 }
 
-extension AppDelegate {
-    
-    func handle(message : String) {
-       
-        if let mapView = UIApplication.topViewController() as? MapViewController {
-            print("YAAHH")
-        } else {
-            if (UIApplication.topViewController() is MapViewController) {
-                print("maybe")
-            }
-        }
-        
-        print(type(of: UIApplication.topViewController()))
-        
-        let alert = UIAlertController(title: "You're on the move!", message: message, preferredStyle: .alert)
-        let cancelButton = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
-        alert.addAction(cancelButton)
-        UIApplication.topViewController()?.present(alert, animated: true, completion: nil)
-            
-        
-    }
-    
-    
-    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-        if region is CLCircularRegion {
-            handle(message: "Currently entering Monash Clayton")
-        }
-        
-    }
-    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-        if region is CLCircularRegion {
-            handle(message: "Currently leaving Monash Clayton")
-        }
-    }
-}
-
-
-extension UIApplication {
-    class func topViewController(controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
-//        if let navigationController = controller as? UINavigationController {
-//            return topViewController(controller: navigationController.visibleViewController)
-//        }
-//        if let tabController = controller as? UITabBarController {
-//            if let selected = tabController.selectedViewController {
-//                return topViewController(controller: selected)
-//            }
-//        }
-        if let presented = controller?.presentedViewController {
-            return topViewController(controller: presented)
-        }
-        return controller
-    }
-    
-}

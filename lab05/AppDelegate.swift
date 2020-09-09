@@ -7,31 +7,109 @@
 //
 
 import UIKit
+import CoreLocation
+
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
+    
+    
+    
+    var geofence: CLCircularRegion?
+    var locationManager: CLLocationManager = CLLocationManager()
+    
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
+    ) -> Bool {
+        
+        let location = LocationAnnotation(title: "Monash Uni - Caulfield",
+                                          subtitle: "The Caulfield Campus of the Uni",
+                                          lat: -37.877623, long: 145.045374)
+        
+        geofence = CLCircularRegion(center: location.coordinate, radius: 500,
+                                    identifier: "geofence")
+        geofence?.notifyOnExit = true
+        geofence?.notifyOnEntry = true
+        
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startMonitoring(for: geofence!)
+        
         return true
     }
-
-    // MARK: UISceneSession Lifecycle
-
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        application.applicationIconBadgeNumber = 0
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+    }
+    
+    func showAlert(target: UIViewController, title: String, message: String? = nil, style: UIAlertController.Style = .alert, actionList:[UIAlertAction] = [UIAlertAction(title: "OK", style: .default, handler: nil)] ) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: style)
+        for action in actionList {
+            alert.addAction(action)
+        }
+        // Check to see if the target viewController current is currently presenting a ViewController
+        if target.presentedViewController == nil {
+            target.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
         // Use this method to select a configuration to create the new scene with.
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
-
+    
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
         // Called when the user discards a scene session.
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
-
-
+    
+    
 }
 
+extension AppDelegate {
+    
+    func handle(message : String) {
+        let alert = UIAlertController(title: "You're on the move!", message: message, preferredStyle: .alert)
+        let cancelButton = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+        alert.addAction(cancelButton)
+        UIApplication.topViewController()?.present(alert, animated: true, completion: nil)
+    }
+    
+    
+    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        if region is CLCircularRegion {
+            handle(message: "Currently entering Monash Caulfield")
+        }
+        
+    }
+    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+        if region is CLCircularRegion {
+            handle(message: "Currently leaving Monash Caulfield")
+        }
+    }
+}
+
+
+extension UIApplication {
+    class func topViewController(controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+        if let navigationController = controller as? UINavigationController {
+            return topViewController(controller: navigationController.visibleViewController)
+        }
+        if let tabController = controller as? UITabBarController {
+            if let selected = tabController.selectedViewController {
+                return topViewController(controller: selected)
+            }
+        }
+        if let presented = controller?.presentedViewController {
+            return topViewController(controller: presented)
+        }
+        return controller
+    }
+    
+}

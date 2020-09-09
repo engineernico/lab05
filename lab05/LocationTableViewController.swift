@@ -15,8 +15,6 @@ class LocationTableViewController: UITableViewController, NewLocationDelegate, C
     
     weak var mapViewController: MapViewController?
     var locationList = [LocationAnnotation]()
-    var geofence: CLCircularRegion?
-    var locationManager: CLLocationManager = CLLocationManager()
     
     
     override func viewDidLoad() {
@@ -33,15 +31,7 @@ class LocationTableViewController: UITableViewController, NewLocationDelegate, C
                                       lat: -37.9105238, long: 145.1362182)
         locationList.append(location)
         mapViewController?.mapView.addAnnotation(location)
-        print(location.coordinate)
-        geofence = CLCircularRegion(center: location.coordinate, radius: 500,
-                                    identifier: "geofence")
-        geofence?.notifyOnExit = true
-        geofence?.notifyOnEntry = true
-        
-        locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
-        locationManager.startMonitoring(for: geofence!)
+       
         
         
         // Uncomment the following line to preserve selection between presentations
@@ -51,31 +41,7 @@ class LocationTableViewController: UITableViewController, NewLocationDelegate, C
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        locationManager.startUpdatingLocation()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        locationManager.stopUpdatingLocation()
-    }
-    
-    // MARK: - Geofencing Methods
-    func locationManager(_ manager: CLLocationManager,
-                         didExitRegion region: CLRegion) {
-        let alert = UIAlertController(title: "Movement Detected!", message:
-            "You have left Monash Caulfield", preferredStyle:
-            UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style:
-            UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-        print("enter")
-    }
+  
     
     // MARK: - Table view data source
     

@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class LocationTableViewController: UITableViewController, NewLocationDelegate, CLLocationManagerDelegate {
+class LocationTableViewController: UITableViewController, CLLocationManagerDelegate {
     
     
     weak var mapViewController: MapViewController?
@@ -89,20 +89,20 @@ class LocationTableViewController: UITableViewController, NewLocationDelegate, C
         }
     }
     
-    // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "addLocationSegue" {
-            let controller = segue.destination as! NewLocationViewController
-            controller.delegate = self
-        }
-    }
-    // MARK: - New Location Delegate
-    func locationAnnotationAdded(annotation: Exhibit) {
-        locationList.append(annotation)
-        tableView.insertRows(at: [IndexPath(row: locationList.count - 1,
-                                            section: 0)], with: .automatic)
-        mapViewController?.mapView.addAnnotation(annotation)
-    }
+//    // MARK: - Navigation
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "addLocationSegue" {
+//            let controller = segue.destination as! NewLocationViewController
+//            controller.delegate = self
+//        }
+//    }
+//    // MARK: - New Location Delegate
+//    func locationAnnotationAdded(annotation: Exhibit) {
+//        locationList.append(annotation)
+//        tableView.insertRows(at: [IndexPath(row: locationList.count - 1,
+//                                            section: 0)], with: .automatic)
+//        mapViewController?.mapView.addAnnotation(annotation)
+//    }
     
     /*
      // Override to support conditional editing of the table view.

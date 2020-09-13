@@ -9,16 +9,29 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
     var isMap : Bool = true
+    var currentLocation : CLLocationCoordinate2D?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
+        // Setup and zoom to initial view
         let gardens = Exhibit(title: "Royal Botanic Gardens", subtitle: "General marker to zoom initial map view.", lat: -37.830369, long: 144.979606)
         self.focusOn(annotation: gardens)
-                
+        
+        // Setup gesture recognition for adding exhibits
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
+        self.view.addGestureRecognizer(tapGestureRecognizer)
+        
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressed))
+        self.view.addGestureRecognizer(longPressRecognizer)
+        
+        
+        
         // Do any additional setup after loading the view.
     }
     
@@ -31,15 +44,37 @@ class MapViewController: UIViewController {
         let zoomRegion = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: 800,
                                             longitudinalMeters: 1000)
         mapView.setRegion(mapView.regionThatFits(zoomRegion), animated: true)
+        mapView.isZoomEnabled = true
     }
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    
+    @objc func tapped(gestureRecognizer : UITapGestureRecognizer) {
+        print("Tapped")
+    }
+    
+    @objc func longPressed(gestureRecognizer: UILongPressGestureRecognizer) {
+        
+        
+        if (gestureRecognizer.state == .began) {
+            let location = gestureRecognizer.location(in: mapView)
+            currentLocation  = mapView.convert(location, toCoordinateFrom: mapView)
+            
+            print(currentLocation ?? "Not found current Location")
+            self.performSegue(withIdentifier: "addLocationFromMapSegue", sender: self)
+        }
+        // Add annotation:
+        //        let annotation = MKPointAnnotation()
+        //        annotation.coordinate = coordinate
+        //        mapView.addAnnotation(annotation)
+    }
+    
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let newLocView = segue.destination as? NewLocationViewController  else { return   }
+        newLocView.currentLocation = currentLocation
+    }
+
+
     
 }

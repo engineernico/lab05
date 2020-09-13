@@ -9,12 +9,14 @@
 import UIKit
 import MapKit
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelegate {
+class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelegate, NewLocationDelegate {
     
     var window: UIWindow?
     var geofence: CLCircularRegion?
     var mvc : MapViewController?
     var locationManager: CLLocationManager = CLLocationManager()
+    var locationTableViewController : LocationTableViewController?
+    var newLocationVC : NewLocationViewController?
     
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -27,14 +29,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
         splitViewController.preferredDisplayMode = .allVisible
         let navigationController = splitViewController.viewControllers.first as!
         UINavigationController
-        let locationTableViewController = navigationController.viewControllers.first as!
+        locationTableViewController = navigationController.viewControllers.first as?
         LocationTableViewController
         let mapViewController = splitViewController.viewControllers.last as! MapViewController
         mvc = mapViewController
         
+        newLocationVC?.delegate = self
+        
+        
         let location = Exhibit(title: "Monash Uni - Clayton",
-                                          subtitle: "The Clayton Campus of the Uni",
-                                          lat: -37.9105238, long: 145.1362182)
+                               subtitle: "The Clayton Campus of the Uni",
+                               lat: -37.9105238, long: 145.1362182)
         
         geofence = CLCircularRegion(center: location.coordinate, radius: 500,
                                     identifier: "geofence")
@@ -46,7 +51,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
         locationManager.startMonitoring(for: geofence!)
         
         
-        locationTableViewController.mapViewController = mapViewController
+        locationTableViewController!.mapViewController = mapViewController
+    }
+    
+    // MARK: - New Location Delegate
+    func locationAnnotationAdded(annotation: Exhibit) {
+        print("Adding new location to table.")
+        locationTableViewController!.locationList.append(annotation)
+        locationTableViewController!.tableView.insertRows(at: [IndexPath(row: locationTableViewController!.locationList.count - 1,
+                                            section: 0)], with: .automatic)
+        mvc?.mapView.addAnnotation(annotation)
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -91,7 +105,7 @@ extension SceneDelegate {
             UIApplication.topViewController()?.present(alert, animated: true, completion: nil)
             
         }
-
+        
     }
     
     

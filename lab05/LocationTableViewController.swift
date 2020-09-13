@@ -14,19 +14,19 @@ class LocationTableViewController: UITableViewController, NewLocationDelegate, C
     
     
     weak var mapViewController: MapViewController?
-    var locationList = [LocationAnnotation]()
+    var locationList = [Exhibit]()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var location = LocationAnnotation(title: "Monash Uni - Caulfield",
+        var location = Exhibit(title: "Monash Uni - Caulfield",
                                           subtitle: "The Caulfield Campus of the Uni",
                                           lat: -37.877623, long: 145.045374)
         locationList.append(location)
         mapViewController?.mapView.addAnnotation(location)
         
-        location = LocationAnnotation(title: "Monash Uni - Clayton",
+        location = Exhibit(title: "Monash Uni - Clayton",
                                       subtitle: "The Clayton Campus of the Uni",
                                       lat: -37.9105238, long: 145.1362182)
         locationList.append(location)
@@ -97,7 +97,7 @@ class LocationTableViewController: UITableViewController, NewLocationDelegate, C
         }
     }
     // MARK: - New Location Delegate
-    func locationAnnotationAdded(annotation: LocationAnnotation) {
+    func locationAnnotationAdded(annotation: Exhibit) {
         locationList.append(annotation)
         tableView.insertRows(at: [IndexPath(row: locationList.count - 1,
                                             section: 0)], with: .automatic)

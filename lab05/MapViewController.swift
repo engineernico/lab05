@@ -15,6 +15,9 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let gardens = Exhibit(title: "Royal Botanic Gardens", subtitle: "General marker to zoom initial map view.", lat: -37.830369, long: 144.979606)
+        self.focusOn(annotation: gardens)
                 
         // Do any additional setup after loading the view.
     }
@@ -25,7 +28,7 @@ class MapViewController: UIViewController {
     func focusOn(annotation: MKAnnotation) {
         mapView.selectAnnotation(annotation, animated: true)
         
-        let zoomRegion = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: 1000,
+        let zoomRegion = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: 800,
                                             longitudinalMeters: 1000)
         mapView.setRegion(mapView.regionThatFits(zoomRegion), animated: true)
     }

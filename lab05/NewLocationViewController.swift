@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 
 protocol NewLocationDelegate: NSObject {
-    func locationAnnotationAdded(annotation: LocationAnnotation)
+    func locationAnnotationAdded(annotation: Exhibit)
 }
 
 class NewLocationViewController: UIViewController, CLLocationManagerDelegate {
@@ -100,7 +100,7 @@ class NewLocationViewController: UIViewController, CLLocationManagerDelegate {
                 return
         }
         
-        let newLocation = LocationAnnotation(title: titleTextField.text!,
+        let newLocation = Exhibit(title: titleTextField.text!,
                                              subtitle: descriptionTextField.text!, lat: lat, long: long)
         delegate?.locationAnnotationAdded(annotation: newLocation)
         navigationController?.popViewController(animated: true)

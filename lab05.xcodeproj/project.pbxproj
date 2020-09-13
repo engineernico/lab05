@@ -16,7 +16,8 @@
 		2622B529250884E5005DD0DF /* LocationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2622B528250884E5005DD0DF /* LocationTableViewController.swift */; };
 		2622B52B2508850E005DD0DF /* NewLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2622B52A2508850E005DD0DF /* NewLocationViewController.swift */; };
 		2622B52D25088529005DD0DF /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2622B52C25088529005DD0DF /* MapViewController.swift */; };
-		2622B52F25088567005DD0DF /* LocationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2622B52E25088567005DD0DF /* LocationAnnotation.swift */; };
+		2622B52F25088567005DD0DF /* Exhibit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2622B52E25088567005DD0DF /* Exhibit.swift */; };
+		26A32B92250E01F800B405EA /* BotanicGarden.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 26A32B91250E01F800B405EA /* BotanicGarden.gpx */; };
 		26CF712D2508E939002C6FD0 /* clayton.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 26CF712C2508E939002C6FD0 /* clayton.gpx */; };
 /* End PBXBuildFile section */
 
@@ -32,7 +33,8 @@
 		2622B528250884E5005DD0DF /* LocationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewController.swift; sourceTree = "<group>"; };
 		2622B52A2508850E005DD0DF /* NewLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLocationViewController.swift; sourceTree = "<group>"; };
 		2622B52C25088529005DD0DF /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		2622B52E25088567005DD0DF /* LocationAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAnnotation.swift; sourceTree = "<group>"; };
+		2622B52E25088567005DD0DF /* Exhibit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exhibit.swift; sourceTree = "<group>"; };
+		26A32B91250E01F800B405EA /* BotanicGarden.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = BotanicGarden.gpx; path = ../../../Downloads/BotanicGarden.gpx; sourceTree = "<group>"; };
 		26CF712C2508E939002C6FD0 /* clayton.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = clayton.gpx; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -76,8 +78,9 @@
 				2622B528250884E5005DD0DF /* LocationTableViewController.swift */,
 				2622B52A2508850E005DD0DF /* NewLocationViewController.swift */,
 				2622B52C25088529005DD0DF /* MapViewController.swift */,
+				26A32B91250E01F800B405EA /* BotanicGarden.gpx */,
 				26CF712C2508E939002C6FD0 /* clayton.gpx */,
-				2622B52E25088567005DD0DF /* LocationAnnotation.swift */,
+				2622B52E25088567005DD0DF /* Exhibit.swift */,
 			);
 			path = lab05;
 			sourceTree = "<group>";
@@ -142,6 +145,7 @@
 			files = (
 				2619EDCA250853780080F8BB /* LaunchScreen.storyboard in Resources */,
 				2619EDC7250853780080F8BB /* Assets.xcassets in Resources */,
+				26A32B92250E01F800B405EA /* BotanicGarden.gpx in Resources */,
 				26CF712D2508E939002C6FD0 /* clayton.gpx in Resources */,
 				2619EDC5250853760080F8BB /* Main.storyboard in Resources */,
 			);
@@ -158,7 +162,7 @@
 				2622B52D25088529005DD0DF /* MapViewController.swift in Sources */,
 				2619EDC2250853760080F8BB /* ViewController.swift in Sources */,
 				2619EDBE250853760080F8BB /* AppDelegate.swift in Sources */,
-				2622B52F25088567005DD0DF /* LocationAnnotation.swift in Sources */,
+				2622B52F25088567005DD0DF /* Exhibit.swift in Sources */,
 				2622B52B2508850E005DD0DF /* NewLocationViewController.swift in Sources */,
 				2619EDC0250853760080F8BB /* SceneDelegate.swift in Sources */,
 			);

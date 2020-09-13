@@ -32,7 +32,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
         let mapViewController = splitViewController.viewControllers.last as! MapViewController
         mvc = mapViewController
         
-        let location = LocationAnnotation(title: "Monash Uni - Clayton",
+        let location = Exhibit(title: "Monash Uni - Clayton",
                                           subtitle: "The Clayton Campus of the Uni",
                                           lat: -37.9105238, long: 145.1362182)
         

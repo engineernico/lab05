@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelegate, NewLocationDelegate {
+class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelegate {
     
     var window: UIWindow?
     var geofence: CLCircularRegion?
@@ -34,7 +34,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
         let mapViewController = splitViewController.viewControllers.last as! MapViewController
         mvc = mapViewController
         
-        newLocationVC?.delegate = self
+        mapViewController.locationTableVC = locationTableViewController
+        
         
         
         let location = Exhibit(title: "Monash Uni - Clayton",
@@ -54,14 +55,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
         locationTableViewController!.mapViewController = mapViewController
     }
     
-    // MARK: - New Location Delegate
-    func locationAnnotationAdded(annotation: Exhibit) {
-        print("Adding new location to table.")
-        locationTableViewController!.locationList.append(annotation)
-        locationTableViewController!.tableView.insertRows(at: [IndexPath(row: locationTableViewController!.locationList.count - 1,
-                                            section: 0)], with: .automatic)
-        mvc?.mapView.addAnnotation(annotation)
-    }
     
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.

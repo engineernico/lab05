@@ -55,7 +55,12 @@ class LocationTableViewController: UITableViewController, CLLocationManagerDeleg
         return locationList.count
     }
     
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        let newlocvc = segue.destination as? NewLocationViewController
+//        newlocvc.delegate = self
+//    }
     
+
     
     
     

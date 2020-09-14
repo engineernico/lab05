@@ -9,10 +9,11 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController, UIGestureRecognizerDelegate {
+class MapViewController: UIViewController, UIGestureRecognizerDelegate, NewLocationDelegate {
     
     var isMap : Bool = true
     var currentLocation : CLLocationCoordinate2D?
+    var locationTableVC: LocationTableViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,12 +68,23 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         //        mapView.addAnnotation(annotation)
     }
     
+    
+    // MARK: - New Location Delegate
+       func locationAnnotationAdded(annotation: Exhibit) {
+           print("Adding new location to table.")
+        locationTableVC!.locationList.append(annotation)
+        locationTableVC!.tableView.insertRows(at: [IndexPath(row: locationTableVC!.locationList.count - 1,
+                                               section: 0)], with: .automatic)
+        mapView.addAnnotation(annotation)
+       }
+    
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let newLocView = segue.destination as? NewLocationViewController  else { return   }
         newLocView.currentLocation = currentLocation
+        newLocView.delegate = self
     }
 
 

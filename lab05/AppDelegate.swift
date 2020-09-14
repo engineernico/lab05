@@ -13,8 +13,6 @@ import CoreLocation
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
     
-    
-    
 
     func application(
         _ application: UIApplication,
